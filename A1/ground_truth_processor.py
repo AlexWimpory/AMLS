@@ -21,15 +21,6 @@ class GroundtruthReader:
         else:
             return None
 
-    @staticmethod
-    def smiling_or_not_smiling(number):
-        if number == '1':
-            return 'smiling'
-        elif number == '-1':
-            return 'not_smiling'
-        else:
-            return None
-
 
 if __name__ == '__main__':
     gtp = GroundtruthReader('../Datasets/celeba/labels.csv')

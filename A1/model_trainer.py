@@ -30,7 +30,7 @@ class ImageFeaturesModel:
         return accuracy
 
     def train_model(self, x_train, y_train, x_val, y_val):
-        checkpointer = ModelCheckpoint(filepath=f'data/{self.model.name}.hdf5', verbose=1, save_best_only=True)
+        checkpointer = ModelCheckpoint(filepath=f'{self.model.name}.hdf5', verbose=1, save_best_only=True)
         history = self.model.fit(x_train, y_train, batch_size=features_config.num_batch_size,
                                  epochs=features_config.num_epochs, validation_data=(x_val, y_val),
                                  callbacks=[checkpointer], verbose=1)
@@ -79,6 +79,6 @@ if __name__ == '__main__':
     ftrs = np.array(features_and_labels['image_feature'].to_list())
     label_encoder = ModelLabelEncoder(labels)
     mdl_structure = model_1(label_encoder.encoded_labels.shape[1])
-    mdl = ImageFeaturesModel('model_1', label_encoder, mdl_structure)
+    mdl = ImageFeaturesModel('A1', label_encoder, mdl_structure)
     mdl.compile()
     train_and_test_model(ftrs, label_encoder, mdl)
