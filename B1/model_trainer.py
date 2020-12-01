@@ -3,10 +3,10 @@ from sklearn.model_selection import train_test_split
 from tensorflow.python.keras import Sequential
 from tensorflow.python.keras.callbacks import ModelCheckpoint
 from tensorflow.python.ops.confusion_matrix import confusion_matrix
-from A1.feature_pre_processing import load_features
-from A1.model_labeler import ModelLabelEncoder
-from A1.model_structures import *
-from A1.model_plotter import plot_history, plot_confusion_matrix
+from B1.feature_pre_processing import load_features
+from B1.model_labeler import ModelLabelEncoder
+from B1.model_structures import *
+from B1.model_plotter import plot_history, plot_confusion_matrix
 import numpy as np
 import pandas as pd
 from A1 import features_config
