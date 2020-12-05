@@ -8,7 +8,8 @@ class ModelLabelEncoder:
     def __init__(self, labels):
         self._le = LabelEncoder()
         label_array = np.array(labels).ravel()
-        self.encoded_labels = to_categorical(self._le.fit_transform(label_array))
+        self.numerical_labels = self._le.fit_transform(label_array)
+        self.encoded_labels = to_categorical(self.numerical_labels)
 
     def transform(self, labels):
         return to_categorical(self._le.transform(labels))
