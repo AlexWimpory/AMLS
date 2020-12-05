@@ -1,13 +1,29 @@
 import numpy as np
 import cv2
+# from A2_smile_recogniser import FeaturesDetector, shapes_to_rects, FACIAL_LANDMARKS_IDXS, copy_rects_on_image
+# from A2_face_recogniser import FaceDetector, crop_faces
+
+# detector = FaceDetector()
+# detector = FeaturesDetector()
 
 
 def create_image(path):
     """Create an image from the passed path"""
     image = cv2.imread(path)
-    image = cv2.resize(image, (50, 50))
+    # fcs = detector.detect_faces(image)
+    # shps = detector.detect_features(image, fcs)
+    # if len(shps) > 0:
+    #     rcts = shapes_to_rects(shps, [FACIAL_LANDMARKS_IDXS['mouth']])
+    #     blank_image = np.zeros(shape=image.shape, dtype=np.uint8)
+    #     image = copy_rects_on_image(blank_image, image, rcts)
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    # faces = detector.detect_faces(image)
+    # if len(faces) > 0:
+    #     image = crop_faces(image, faces)[0]
+    image = cv2.resize(image, (50, 50))
     return image
+    # else:
+    #     return None
 
 
 def image_to_data(image):

@@ -12,7 +12,8 @@ def prepare_feature(ground_truth, file_name):
     base_file_name = os.path.basename(file_name)
     gtp = GroundtruthReader(ground_truth)
     from_ground_truth = gtp.lookup_filename(base_file_name)
-    image_feature = image_to_data(create_image(file_name))
+    format_image = create_image(file_name)
+    image_feature = image_to_data(format_image)
     return {'image_feature': image_feature, 'labels': from_ground_truth}
 
 

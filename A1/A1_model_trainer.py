@@ -21,7 +21,7 @@ class ImageFeaturesModel:
             self.model.add(layer)
 
     def compile(self):
-        self.model.compile(loss='categorical_crossentropy', metrics=['accuracy'], optimizer='adam')
+        self.model.compile(loss='binary_crossentropy', metrics=['accuracy'], optimizer='adam')
         self.model.summary()
 
     def test_model(self, x_data, y_data):

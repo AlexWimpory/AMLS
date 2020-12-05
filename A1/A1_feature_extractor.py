@@ -1,12 +1,19 @@
 import numpy as np
 import cv2
 
+from A1_face_recogniser import FaceDetector, crop_faces
+
+detector = FaceDetector()
+
 
 def create_image(path):
     """Create an image from the passed path"""
     image = cv2.imread(path)
-    image = cv2.resize(image, (50, 50))
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    faces = detector.detect_faces(image)
+    if len(faces) > 0:
+        image = crop_faces(image, faces)[0]
+    image = cv2.resize(image, (50, 50))
     return image
 
 
@@ -25,6 +32,6 @@ def visualise(image, title):
 
 
 if __name__ == '__main__':
-    feature = create_image('../Datasets/celeba/img/1.jpg')
+    feature = create_image('../Datasets/celeba/img/118.jpg')
     data = image_to_data(feature)
     visualise(feature, 'Image')

@@ -11,8 +11,8 @@ from B2_model_evaluator import evaluate as b2_evaluate
 
 
 def main():
-    task = input('Enter a task (A1, A2, B1, B2)')
-    mode = input('Enter an operation (Train, Evaluate, Predict)')
+    task = input('Enter a task (A1, A2, B1, B2):\n')
+    mode = input('Enter an operation (Train, Evaluate, Predict:\n)')
 
     # Could be re-written using reflection to call the functions
     if task == 'A1':

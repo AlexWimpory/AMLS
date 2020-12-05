@@ -6,4 +6,9 @@ Directory Structure:
 * A2: Emotion detection: smiling or not smiling
 * B1: Face shape recognition: 5 types of face shapes
 * B2: Eye color recognition: 5 types of eye colors
-* Datasets: Celeba and Cartoon_set
+* Datasets: Celeba, Celeba_test and Cartoon_set, Cartoon_set_test
+
+Each task is self-sufficient but the code was designed to be resuable
+ therefore there is a lot of duplicate code in each directory
+
+Packages required found in requirements.txt and can be installed using pip install -r requirements.txt

@@ -17,7 +17,8 @@ def return_from_path(f, path_name, extension):
             if file.endswith(extension):
                 try:
                     result = f(os.path.join(root, file))
-                    results.append(result)
+                    if result:
+                        results.append(result)
                 except BaseException as err:
                     print(f'Unable to process {file} in {root}')
                     print(traceback.format_exc())
