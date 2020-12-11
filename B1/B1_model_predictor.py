@@ -1,5 +1,5 @@
 import json
-from B1.B1_feature_extractor import create_image, image_to_data
+from B1.B1_feature_extractor import create_image, image_to_array
 from tensorflow.python.keras.models import load_model
 from B1.B1_model_trainer import ModelLabelEncoder
 import numpy as np
@@ -12,7 +12,7 @@ class ModelPredictor:
 
     def predict(self, file_name):
         results = ModelPredictorResults()
-        image = np.array([image_to_data(create_image(file_name))])
+        image = np.array([image_to_array(create_image(file_name))])
         predicted_vector = self._model.predict_classes(image)
         predicted_class = self._le.inverse_transform(predicted_vector)
         results.predicted_class = predicted_class[0]

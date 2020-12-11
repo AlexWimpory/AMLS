@@ -10,7 +10,7 @@ def create_image(path):
     return image
 
 
-def image_to_data(image):
+def image_to_array(image):
     image_array = np.array(image).astype('float32')
     image_array = image_array / 255
     image_array = image_array.reshape(50, 50, 1)
@@ -26,5 +26,5 @@ def visualise(image, title):
 
 if __name__ == '__main__':
     feature = create_image('../Datasets/cartoon_set/img/5.png')
-    data = image_to_data(feature)
+    data = image_to_array(feature)
     visualise(feature, 'Image')

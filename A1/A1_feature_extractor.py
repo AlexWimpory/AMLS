@@ -1,12 +1,14 @@
 import glob
-
 import numpy as np
 import cv2
-
 from A1_face_recogniser import FaceDetector, crop_faces
 
-#detector = FaceDetector()
+"""
+Converts an image to data which is usable by the machine learning model
+Face detection is commented out as I found that it did not make a difference to the output
+"""
 
+#detector = FaceDetector()
 
 def create_image(path):
     """Create an image from the passed path"""
@@ -19,7 +21,9 @@ def create_image(path):
     return image
 
 
-def image_to_data(image):
+def image_to_array(image):
+    """Turn the image into an array of numbers the same size as the image,
+     between 0 and 255 depending on the pixel intensity (used for NN) """
     image_array = np.array(image).astype('float32')
     image_array = image_array / 255
     image_array = image_array.reshape(50, 50, 1)
@@ -27,6 +31,7 @@ def image_to_data(image):
 
 
 def image_to_vector(image):
+    """Some models can't take an array as an input so the array is flattened to a vector (used for SVM and  KNN)"""
     return np.array(image).reshape(-1)
 
 
@@ -38,23 +43,7 @@ def visualise(image, title):
 
 
 if __name__ == '__main__':
-    feature = create_image('../Datasets/celeba/img/118.jpg')
-    data = image_to_vector(feature)
-    # data = image_to_data(feature)
-    # # visualise(feature, 'Image')
-    # path = glob.glob("../Datasets/celeba/img/*.jpg")
-    # X = []
-    # count = 0
-    # for img in path:
-    #         n = cv2.imread(img)
-    #         gray = cv2.cvtColor(n, cv2.COLOR_BGR2GRAY)
-    #         gray = cv2.resize(gray, (50, 50))
-    #         X.append(gray)
-    #         count = count + 1
-    # sizeImg = X[0].shape
-    # A = np.zeros((sizeImg[0] * sizeImg[1], len(X)))
-    #
-    # for i in range(0, len(X)):
-    #     tmp = (np.array(X[i]).reshape(-1))
-    #     A[:, i] = np.array(tmp)
-    # print(A.shape)
+    feature = create_image('../Datasets/celeba/img/4512.jpg')
+    # data = image_to_vector(feature)
+    data = image_to_array(feature)
+    visualise(feature, 'Image')

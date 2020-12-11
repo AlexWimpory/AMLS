@@ -11,14 +11,14 @@ def model_1(num_labels):
         Dropout(0.25),
         Conv2D(128, (3, 3), activation='linear', padding='valid'),
         MaxPooling2D(pool_size=(2, 2), padding='valid'),
-        Dropout(0.4),
+        Dropout(0.25),
 
         Flatten(),
         Dense(2048, activation='linear'),
-        Dropout(0.3),
+        Dropout(0.25),
         Dense(128, activation='linear'),
-        Dropout(0.3),
+        Dropout(0.25),
         Dense(32, activation='linear'),
-        Dropout(0.3),
+        Dropout(0.25),
         Dense(num_labels, activation='softmax'),
     ]

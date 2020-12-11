@@ -1,5 +1,5 @@
 from pandas import DataFrame
-from A2_feature_extractor import image_to_data, create_image
+from A2_feature_extractor import image_to_array, create_image
 from A2_file_utils import return_from_path
 from functools import partial
 import os
@@ -14,7 +14,7 @@ def prepare_feature(ground_truth, file_name):
     from_ground_truth = gtp.lookup_filename(base_file_name)
     image = create_image(file_name)
     if image is not None:
-        image_feature = image_to_data(image)
+        image_feature = image_to_array(image)
         return {'image_feature': image_feature, 'labels': from_ground_truth}
     else:
         return None

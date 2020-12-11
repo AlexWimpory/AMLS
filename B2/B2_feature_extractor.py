@@ -9,7 +9,9 @@ def create_image(path):
     return image
 
 
-def image_to_data(image):
+def image_to_array(image):
+    """Turn the image into an array of numbers the same size as the image,
+     between 0 and 255 depending on the pixel intensity (used for NN) now with a depth of 3 for RBG """
     image_array = np.array(image).astype('float32')
     image_array = image_array / 255
     image_array = image_array.reshape(50, 50, 3)
@@ -25,5 +27,5 @@ def visualise(image, title):
 
 if __name__ == '__main__':
     feature = create_image('../Datasets/cartoon_set/img/5.png')
-    data = image_to_data(feature)
+    data = image_to_array(feature)
     visualise(feature, 'Image')

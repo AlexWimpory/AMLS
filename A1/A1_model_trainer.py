@@ -1,15 +1,16 @@
 from numpy.ma import argmax
 from sklearn.model_selection import train_test_split
 from tensorflow.python.keras import Sequential
-from tensorflow.python.keras.callbacks import ModelCheckpoint
+from tensorflow.python.keras.callbacks import ModelCheckpoint, EarlyStopping
 from tensorflow.python.ops.confusion_matrix import confusion_matrix
-from A1.A1_feature_pre_processing import load_features
 from A1.A1_model_labeler import ModelLabelEncoder
 from A1.A1_model_structures import *
 from A1.A1_model_plotter import plot_history, plot_confusion_matrix
+import time
 import numpy as np
 import pandas as pd
-from A1 import A1_features_config
+from A1 import A1_features_config as config
+from A1_file_utils import load_object, save_object
 
 
 class ImageFeaturesModel:
@@ -21,7 +22,7 @@ class ImageFeaturesModel:
             self.model.add(layer)
 
     def compile(self):
-        self.model.compile(loss='binary_crossentropy', metrics=['accuracy'], optimizer='adam')
+        self.model.compile(loss='binary_crossentropy', metrics=['accuracy'], optimizer=config.optimizer)
         self.model.summary()
 
     def test_model(self, x_data, y_data):
@@ -30,10 +31,11 @@ class ImageFeaturesModel:
         return accuracy
 
     def train_model(self, x_train, y_train, x_val, y_val):
+        early_stop = EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience=5)
         checkpointer = ModelCheckpoint(filepath=f'{self.model.name}.hdf5', verbose=1, save_best_only=True)
-        history = self.model.fit(x_train, y_train, batch_size=A1_features_config.num_batch_size,
-                                 epochs=A1_features_config.num_epochs, validation_data=(x_val, y_val),
-                                 callbacks=[checkpointer], verbose=1)
+        history = self.model.fit(x_train, y_train, batch_size=config.num_batch_size,
+                                 epochs=config.num_epochs, validation_data=(x_val, y_val),
+                                 callbacks=[early_stop, checkpointer], verbose=1)
         self.le.save(self.model.name)
         return history
 
@@ -49,17 +51,19 @@ class ImageFeaturesModel:
 def train_and_test_model(features, le, model):
     print(features.shape)
     x_train, x_test, y_train, y_test = train_test_split(features, le.encoded_labels,
-                                                        test_size=1 - A1_features_config.train_ratio,
+                                                        test_size=1 - config.train_ratio,
                                                         random_state=44)
     x_cv, x_test, y_cv, y_test = train_test_split(x_test, y_test,
-                                                  test_size=A1_features_config.test_ratio / (
-                                                          A1_features_config.test_ratio + A1_features_config.validation_ratio),
+                                                  test_size=config.test_ratio / (
+                                                          config.test_ratio + config.validation_ratio),
                                                   random_state=44)
 
     pre_acc = model.test_model(x_test, y_test)
     print(f'Pre-trained accuracy = {pre_acc:.4f}')
 
-    plot_history(model.train_model(x_train, y_train, x_cv, y_cv))
+    history = model.train_model(x_train, y_train, x_cv, y_cv)
+    plot_history(history)
+    save_object(history.history, f'history_{config.optimizer}_{config.num_batch_size}.data')
 
     post_acc_train = model.test_model(x_train, y_train)
     print(f'Training accuracy = {post_acc_train:.4f}')
@@ -72,17 +76,32 @@ def train_and_test_model(features, le, model):
 
     plot_confusion_matrix(model.calculate_confusion_matrix(x_test, y_test))
 
+    return post_acc_test
+
+
 
 def trainer():
-    features_and_labels = load_features('A1.data')
+    features_and_labels = load_object('A1.data')
     labels = features_and_labels['labels'].tolist()
     ftrs = np.array(features_and_labels['image_feature'].to_list())
     label_encoder = ModelLabelEncoder(labels)
     mdl_structure = model_1(label_encoder.encoded_labels.shape[1])
     mdl = ImageFeaturesModel('A1', label_encoder, mdl_structure)
     mdl.compile()
-    train_and_test_model(ftrs, label_encoder, mdl)
+    return train_and_test_model(ftrs, label_encoder, mdl)
 
 
 if __name__ == '__main__':
-    trainer()
+    parameters = [4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096]
+    results = []
+    execution_time = []
+    for batch_size in parameters:
+        config.optimizer = 'adam'
+        config.num_batch_size = batch_size
+        start = time.time()
+        results.append(trainer())
+        end = time.time()
+        execution_time.append(end - start)
+
+    print(results)
+    print(execution_time)

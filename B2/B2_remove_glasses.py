@@ -1,15 +1,7 @@
-import math
 import os
-from collections import OrderedDict
 from functools import partial
-
-import cv2
-import dlib
-
 from B2_eye_recogniser import FeaturesDetector
-from B2_face_recogniser import read_image, draw_rect_on_image, show_images, crop_faces
-import numpy as np
-
+from B2_face_recogniser import read_image
 from B2_file_utils import apply_to_path
 
 detector = FeaturesDetector()
