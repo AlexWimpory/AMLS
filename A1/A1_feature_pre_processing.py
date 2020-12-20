@@ -24,7 +24,11 @@ def feature_pre_processor(path):
     return DataFrame(ftrs)
 
 
-if __name__ == '__main__':
+def save_pre_processed_data():
+    print('Pre-processing images')
     save_object(feature_pre_processor('../Datasets/celeba'), 'A1.data')
 
+
+if __name__ == '__main__':
+    save_pre_processed_data()
 

@@ -3,6 +3,8 @@ import pickle
 from os.path import dirname, basename, splitext, join
 import traceback
 
+"""Contains functions for climbing through directories and saving/loading objects with pickle"""
+
 
 def apply_to_path(f, path_name, extension):
     for root, dirs, files in os.walk(path_name):

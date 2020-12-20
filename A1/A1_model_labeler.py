@@ -4,7 +4,8 @@ import numpy as np
 import pickle
 
 """
-Build and save an encoder that maps labels onto numerical values
+Build and save an encoder that changes labels type
+* Word labels = [word_1,word_2,word_3]
 * Numerical labels = [0,1,2]
 * One hot encoding labels = [1,0,0],[0,1,0],[0,0,1]
 """

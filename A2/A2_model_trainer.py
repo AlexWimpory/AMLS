@@ -1,15 +1,13 @@
-from numpy.ma import argmax
 from sklearn.model_selection import train_test_split
 from tensorflow.python.keras import Sequential
-from tensorflow.python.keras.callbacks import ModelCheckpoint
-from tensorflow.python.ops.confusion_matrix import confusion_matrix
-from A2.A2_feature_pre_processing import load_features
+from tensorflow.python.keras.callbacks import ModelCheckpoint, EarlyStopping
 from A2.A2_model_labeler import ModelLabelEncoder
 from A2.A2_model_structures import *
 from A2.A2_model_plotter import plot_history, plot_confusion_matrix
 import numpy as np
-import pandas as pd
 from A2 import A2_features_config
+from A2_file_utils import load_object
+from A2_model_evaluator import calculate_confusion_matrix
 
 
 class ImageFeaturesModel:
@@ -30,20 +28,13 @@ class ImageFeaturesModel:
         return accuracy
 
     def train_model(self, x_train, y_train, x_val, y_val):
+        early_stop = EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience=5)
         checkpointer = ModelCheckpoint(filepath=f'{self.model.name}.hdf5', verbose=1, save_best_only=True)
         history = self.model.fit(x_train, y_train, batch_size=A2_features_config.num_batch_size,
                                  epochs=A2_features_config.num_epochs, validation_data=(x_val, y_val),
-                                 callbacks=[checkpointer], verbose=1)
+                                 callbacks=[early_stop, checkpointer], verbose=1)
         self.le.save(self.model.name)
         return history
-
-    def calculate_confusion_matrix(self, x_test, y_test):
-        y_pred = self.model.predict_classes(x_test)
-        y_test = argmax(y_test, axis=1)
-        con_mat = confusion_matrix(labels=y_test, predictions=y_pred).numpy()
-        con_mat_norm = np.around(con_mat.astype('float') / con_mat.sum(axis=1)[:, np.newaxis], decimals=2)
-        classes = self.le.inverse_transform([0, 1])
-        return pd.DataFrame(con_mat_norm, index=classes, columns=classes)
 
 
 def train_and_test_model(features, le, model):
@@ -70,11 +61,11 @@ def train_and_test_model(features, le, model):
     post_acc_test = model.test_model(x_test, y_test)
     print(f'Testing accuracy = {post_acc_test:.4f}')
 
-    plot_confusion_matrix(model.calculate_confusion_matrix(x_test, y_test))
+    plot_confusion_matrix(calculate_confusion_matrix(model.model, le, x_test, y_test))
 
 
 def trainer():
-    features_and_labels = load_features('A2.data')
+    features_and_labels = load_object('A2.data')
     labels = features_and_labels['labels'].tolist()
     ftrs = np.array(features_and_labels['image_feature'].to_list())
     label_encoder = ModelLabelEncoder(labels)

@@ -1,16 +1,25 @@
-from numpy.ma import argmax
 from sklearn.model_selection import train_test_split
 from tensorflow.python.keras import Sequential
 from tensorflow.python.keras.callbacks import ModelCheckpoint, EarlyStopping
-from tensorflow.python.ops.confusion_matrix import confusion_matrix
 from A1.A1_model_labeler import ModelLabelEncoder
 from A1.A1_model_structures import *
 from A1.A1_model_plotter import plot_history, plot_confusion_matrix
 import time
 import numpy as np
-import pandas as pd
 from A1 import A1_features_config as config
 from A1_file_utils import load_object, save_object
+from A1_model_evaluator import calculate_confusion_matrix
+
+"""
+* Load the pre-processed data
+* Builds the model using the structure defined in model_structures
+* Compiles the model
+* Split the data into train, test and validate
+* Train the model
+* Plot learning curves
+* Calculate accuracy on each data set
+* Plot confusion matrix
+"""
 
 
 class ImageFeaturesModel:
@@ -39,14 +48,6 @@ class ImageFeaturesModel:
         self.le.save(self.model.name)
         return history
 
-    def calculate_confusion_matrix(self, x_test, y_test):
-        y_pred = self.model.predict_classes(x_test)
-        y_test = argmax(y_test, axis=1)
-        con_mat = confusion_matrix(labels=y_test, predictions=y_pred).numpy()
-        con_mat_norm = np.around(con_mat.astype('float') / con_mat.sum(axis=1)[:, np.newaxis], decimals=2)
-        classes = self.le.inverse_transform([0, 1])
-        return pd.DataFrame(con_mat_norm, index=classes, columns=classes)
-
 
 def train_and_test_model(features, le, model):
     print(features.shape)
@@ -74,10 +75,9 @@ def train_and_test_model(features, le, model):
     post_acc_test = model.test_model(x_test, y_test)
     print(f'Testing accuracy = {post_acc_test:.4f}')
 
-    plot_confusion_matrix(model.calculate_confusion_matrix(x_test, y_test))
+    plot_confusion_matrix(calculate_confusion_matrix(model.model, le, x_test, y_test))
 
     return post_acc_test
-
 
 
 def trainer():

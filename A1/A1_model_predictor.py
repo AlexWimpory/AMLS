@@ -5,6 +5,12 @@ from A1.A1_model_trainer import ModelLabelEncoder
 import numpy as np
 
 
+"""
+Test the trained model on an image in celeba_test
+The predicted output is the class with the highest probability
+All of the probabilities for each class are also printed for comparison
+"""
+
 class ModelPredictor:
     def __init__(self, model_name):
         self._model = load_model(f'{model_name}.hdf5')
@@ -33,11 +39,11 @@ class ModelPredictorResults:
         self.predicted_probabilities = {}
 
 
-def predict():
+def predict(image):
     predictor = ModelPredictor(model_name='A1')
-    res = predictor.predict('../Datasets/celeba/img/10.jpg')
+    res = predictor.predict(f'../Datasets/celeba_test/img/{image}.jpg')
     print(json.dumps(res.__dict__))
 
 
 if __name__ == '__main__':
-    predict()
+    predict('10')

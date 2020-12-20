@@ -24,6 +24,7 @@ def plot_history(history):
 
 def plot_confusion_matrix(dataframe):
     pyplot.figure(figsize=(8, 8))
+    sns.set(font_scale=2)
     sns.heatmap(dataframe, annot=True, cmap=pyplot.cm.Blues)
     pyplot.tight_layout()
     pyplot.ylabel('True label')

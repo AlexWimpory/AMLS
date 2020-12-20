@@ -1,5 +1,7 @@
 import csv
 
+"""Finds the label for an image in the labels.csv file"""
+
 
 class GroundtruthReader:
     def __init__(self, groundtruth_filename):
@@ -14,6 +16,7 @@ class GroundtruthReader:
 
     @staticmethod
     def smiling_or_not_smiling(number):
+        """Renames label 1 and -1 to smiling and not_smiling"""
         if number == '1':
             return 'smiling'
         elif number == '-1':

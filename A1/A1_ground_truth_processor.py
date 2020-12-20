@@ -1,5 +1,7 @@
 import csv
 
+"""Finds the label for an image in the labels.csv file"""
+
 
 class GroundtruthReader:
     def __init__(self, groundtruth_filename):
@@ -14,6 +16,7 @@ class GroundtruthReader:
 
     @staticmethod
     def male_or_female(number):
+        """Renames label 1 and -1 to male and female"""
         if number == '1':
             return 'male'
         elif number == '-1':

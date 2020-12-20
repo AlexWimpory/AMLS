@@ -1,4 +1,5 @@
 import os
+import pickle
 from os.path import dirname, basename, splitext, join
 import traceback
 
@@ -31,6 +32,15 @@ def append_to_file_name(path, new_str, extension):
     if not extension:
         extension = split[1]
     return join(dir_name, split[0] + new_str + extension)
+
+def save_object(obj, path):
+    with open(path, 'wb') as fout:
+        pickle.dump(obj, fout)
+
+
+def load_object(path):
+    with open(path, 'rb') as fin:
+        return pickle.load(fin)
 
 
 if __name__ == '__main__':

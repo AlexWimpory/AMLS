@@ -33,11 +33,11 @@ class ModelPredictorResults:
         self.predicted_probabilities = {}
 
 
-def predict():
+def predict(image):
     predictor = ModelPredictor(model_name='B2')
-    res = predictor.predict('../Datasets/cartoon_set/img/10.png')
+    res = predictor.predict(f'../Datasets/cartoon_set_test/img/{image}.png')
     print(json.dumps(res.__dict__))
 
 
 if __name__ == '__main__':
-    predict()
+    predict(5)

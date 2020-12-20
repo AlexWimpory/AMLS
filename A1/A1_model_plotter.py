@@ -1,17 +1,20 @@
 import glob
 import os
-
 import seaborn as sns
 from matplotlib import pyplot
 from A1_file_utils import load_object
 
+"""
+Plot learning curves from history
+Display the confusion matrix in a heat map 
+"""
 
 def plot_history(history):
     pyplot.title('Model Accuracy')
     pyplot.xlabel('Epoch')
     pyplot.ylabel('Accuracy')
-    pyplot.plot(history['accuracy'], label='train', marker='o', markersize=3)
-    pyplot.plot(history['val_accuracy'], label='val', marker='o', markersize=3)
+    pyplot.plot(history.history['accuracy'], label='train', marker='o', markersize=3)
+    pyplot.plot(history.history['val_accuracy'], label='val', marker='o', markersize=3)
     pyplot.legend(loc='upper left')
     pyplot.grid()
     pyplot.show()
@@ -19,8 +22,8 @@ def plot_history(history):
     pyplot.title('Model Loss')
     pyplot.xlabel('Epoch')
     pyplot.ylabel('Loss')
-    pyplot.plot(history['loss'], label='train', marker='o', markersize=3)
-    pyplot.plot(history['val_loss'], label='val', marker='o', markersize=3)
+    pyplot.plot(history.history['loss'], label='train', marker='o', markersize=3)
+    pyplot.plot(history.history['val_loss'], label='val', marker='o', markersize=3)
     pyplot.legend(loc='upper right')
     pyplot.grid()
     pyplot.show()
@@ -41,6 +44,7 @@ def plot_graph(title, x_label, y_label, data_item):
 
 def plot_confusion_matrix(dataframe):
     pyplot.figure(figsize=(8, 8))
+    sns.set(font_scale=2)
     sns.heatmap(dataframe, annot=True, cmap=pyplot.cm.Blues)
     pyplot.tight_layout()
     pyplot.ylabel('True label')

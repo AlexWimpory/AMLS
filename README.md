@@ -1,5 +1,5 @@
 # AMLS Coursework
-This project uses machine learning techniques to perform 4 classification tasks.
+This project uses neural networks to perform 4 classification tasks.
 
 Directory Structure:
 * A1: Gender detection: male or female
@@ -8,7 +8,7 @@ Directory Structure:
 * B2: Eye color recognition: 5 different eye colors
 * Datasets: Celeba, Celeba_test and Cartoon_set, Cartoon_set_test
 
-Each task is self-sufficient but the code was designed to be resuable
+Each task is self-sufficient but the code was designed to be reusable
  therefore there is a lot of duplicate code in each directory.
 
 Packages required found in requirements.txt and can be installed using pip install -r requirements.txt.

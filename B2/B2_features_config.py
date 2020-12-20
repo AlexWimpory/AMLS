@@ -1,4 +1,4 @@
-num_epochs = 20
+num_epochs = 100
 num_batch_size = 120
 train_ratio = 0.75
 validation_ratio = 0.15

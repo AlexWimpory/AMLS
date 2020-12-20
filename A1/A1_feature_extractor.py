@@ -32,7 +32,9 @@ def image_to_array(image):
 
 def image_to_vector(image):
     """Some models can't take an array as an input so the array is flattened to a vector (used for SVM and  KNN)"""
-    return np.array(image).reshape(-1)
+    image_vector = np.array(image).reshape(-1)
+    image_vector = image_vector / 255
+    return image_vector
 
 
 def visualise(image, title):
