@@ -5,6 +5,13 @@ from B2.B2_model_trainer import ModelLabelEncoder
 import numpy as np
 
 
+"""
+Test the trained model on an image in cartoon_set_test
+The predicted output is the class with the highest probability
+All of the probabilities for each class are also printed for comparison
+"""
+
+
 class ModelPredictor:
     def __init__(self, model_name):
         self._model = load_model(f'{model_name}.hdf5')
@@ -40,4 +47,4 @@ def predict(image):
 
 
 if __name__ == '__main__':
-    predict(5)
+    predict(12)

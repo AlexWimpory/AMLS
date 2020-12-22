@@ -8,6 +8,12 @@ import numpy as np
 import pandas as pd
 
 
+"""
+Allows the model to be tested on the data in the celeba_test repository, printing an accuracy and a confusion matrix
+Also contains the function for calculating matrix required for the confusion matrix
+"""
+
+
 class ModelEvaluator:
     def __init__(self, model_name):
         self._model = load_model(f'{model_name}.hdf5')

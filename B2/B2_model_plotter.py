@@ -3,6 +3,7 @@ from matplotlib import pyplot
 
 
 def plot_history(history):
+    """Plot learning curves after the model has been trained"""
     pyplot.title('Model Accuracy')
     pyplot.xlabel('Epoch')
     pyplot.ylabel('Accuracy')
@@ -23,6 +24,7 @@ def plot_history(history):
 
 
 def plot_confusion_matrix(dataframe):
+    """PLot calculated confusion matrix using seaborn"""
     pyplot.figure(figsize=(8, 8))
     sns.set(font_scale=2)
     sns.heatmap(dataframe, annot=True, cmap=pyplot.cm.Blues)

@@ -3,7 +3,6 @@ import cv2
 
 class FaceDetector:
     """ Class used to detect facial outline using OpenCV Haas model"""
-
     def __init__(self):
         self._face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
@@ -11,9 +10,8 @@ class FaceDetector:
         # Detect the faces
         return self._face_cascade.detectMultiScale(image, 1.1, 4)
 
+
 # A bunch of helper functions
-
-
 def crop_faces(image, rectangle_list, return_original=False):
     """Crop an image which is really just a matter of reducing a numpy array"""
     faces = []

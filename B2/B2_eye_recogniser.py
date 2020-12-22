@@ -85,7 +85,7 @@ def copy_rects_on_image(target_image, img, rcts):
 
 
 if __name__ == '__main__':
-    img = read_image("../Datasets/cartoon_set/img/62.png")
+    img = read_image("../Datasets/cartoon_set/img/2.png")
     # Here we are using a dlib detector which does both faces and features
     detector = FeaturesDetector()
     # This detects a set of faces and is needed in native form for the next step

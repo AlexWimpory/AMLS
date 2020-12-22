@@ -1,6 +1,9 @@
 import csv
 
 
+"""Finds the label for an image in the labels.csv file"""
+
+
 class GroundtruthReader:
     def __init__(self, groundtruth_filename):
         self.groundtruth_records = {}

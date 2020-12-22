@@ -11,6 +11,7 @@ The predicted output is the class with the highest probability
 All of the probabilities for each class are also printed for comparison
 """
 
+
 class ModelPredictor:
     def __init__(self, model_name):
         self._model = load_model(f'{model_name}.hdf5')

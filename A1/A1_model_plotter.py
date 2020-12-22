@@ -10,6 +10,7 @@ Display the confusion matrix in a heat map
 """
 
 def plot_history(history):
+    """Plot learning curves after the model has been trained"""
     pyplot.title('Model Accuracy')
     pyplot.xlabel('Epoch')
     pyplot.ylabel('Accuracy')
@@ -43,6 +44,7 @@ def plot_graph(title, x_label, y_label, data_item):
 
 
 def plot_confusion_matrix(dataframe):
+    """PLot calculated confusion matrix using seaborn"""
     pyplot.figure(figsize=(8, 8))
     sns.set(font_scale=2)
     sns.heatmap(dataframe, annot=True, cmap=pyplot.cm.Blues)
@@ -53,6 +55,7 @@ def plot_confusion_matrix(dataframe):
 
 
 def plot_file_history():
+    """Plot learning curves from saved data"""
     plot_graph('Model Training Loss', 'Epoch', 'Loss', 'loss')
     plot_graph('Model Validation Loss', 'Epoch', 'Loss', 'val_loss')
     plot_graph('Model Training Accuracy', 'Epoch', 'Accuracy', 'accuracy')

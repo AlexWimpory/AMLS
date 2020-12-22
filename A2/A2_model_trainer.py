@@ -9,6 +9,17 @@ from A2 import A2_features_config
 from A2_file_utils import load_object
 from A2_model_evaluator import calculate_confusion_matrix
 
+"""
+* Load the pre-processed data
+* Builds the model using the structure defined in model_structures
+* Compiles the model
+* Split the data into train, test and validate
+* Train the model
+* Plot learning curves
+* Calculate accuracy on each data set
+* Plot confusion matrix
+"""
+
 
 class ImageFeaturesModel:
     def __init__(self, model_name, le, layers):

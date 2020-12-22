@@ -40,7 +40,7 @@ class SVMModel(ImageFeaturesModel):
 class KNNModel(ImageFeaturesModel):
     def __init__(self, model_name, le):
         super().__init__(model_name, le)
-        self._model = KNeighborsClassifier(n_neighbors=5, metric='minkowski', p=2)
+        self._model = KNeighborsClassifier(n_neighbors=13, metric='minkowski', p=2)
 
 
 def train_and_test_model(features, le, mdl):

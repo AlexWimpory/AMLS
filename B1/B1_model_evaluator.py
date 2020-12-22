@@ -7,6 +7,11 @@ from tensorflow.python.ops.confusion_matrix import confusion_matrix
 import numpy as np
 import pandas as pd
 
+"""
+Allows the model to be tested on the data in the cartoon_set_test repository, printing an accuracy and a confusion matrix
+Also contains the function for calculating matrix required for the confusion matrix
+"""
+
 
 class ModelEvaluator:
     def __init__(self, model_name):
